@@ -188,4 +188,6 @@ return array(
 
 	),
 
+    'page_size' => 5,
+
 );

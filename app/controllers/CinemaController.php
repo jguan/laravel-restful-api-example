@@ -9,6 +9,14 @@ class CinemaController extends \BaseController {
 	 */
 	public function index()
 	{
+        // Pagination support on cinema listings
+        if (Input::has('page')) {
+            $page = (int)Input::get('page');
+            $page = $page > 0 ? $page-1 : 0;
+            $page_size = Config::get('app.page_size', 10);
+            return Response::json(Cinema::skip($page*$page_size)->take($page_size)->get()->toArray());
+        }
+
         return Response::json(Cinema::all()->toArray());
 	}
 
