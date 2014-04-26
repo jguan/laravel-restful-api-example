@@ -31,7 +31,7 @@ class CreateSessionTimesTable extends Migration {
 	 */
 	public function down()
 	{
-        Schema::drop('session_times');
+        Schema::dropIfExists('session_times');
 	}
 
 }

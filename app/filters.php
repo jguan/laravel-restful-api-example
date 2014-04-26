@@ -44,6 +44,12 @@ Route::filter('auth.basic', function()
 	return Auth::basic();
 });
 
+// Setting Up A Stateless HTTP Basic Filter
+Route::filter('basic.once', function()
+{
+    return Auth::onceBasic("username");
+});
+
 /*
 |--------------------------------------------------------------------------
 | Guest Filter

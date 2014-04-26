@@ -18,7 +18,10 @@ Route::get('/', function()
 
 });
 
-Route::resource('cinemas', 'CinemaController');
-Route::resource('movies', 'MovieController');
-Route::get('cinemas/{name}/{date}', 'CinemaController@showMovies');
-Route::get('cinemas/location/{latitude}/{longitude}/{radius?}', 'CinemaController@locateCinemas');
+Route::group(array('before' => 'basic.once'), function()
+{
+    Route::resource('cinemas', 'CinemaController');
+    Route::resource('movies', 'MovieController');
+    Route::get('cinemas/{name}/{date}', 'CinemaController@showMovies');
+    Route::get('cinemas/location/{latitude}/{longitude}/{radius?}', 'CinemaController@locateCinemas');
+});
