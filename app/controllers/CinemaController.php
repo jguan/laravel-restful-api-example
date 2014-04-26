@@ -63,6 +63,7 @@ class CinemaController extends \BaseController {
      */
     public function showMovies($name, $date)
     {
+        // $date could be a partial date string that is supported by PHP DateTime class
         $dt = new Carbon($date);
         $from = $dt->startOfDay()->toDateTimeString();
         $to = $dt->endOfDay()->toDateTimeString();
@@ -129,5 +130,33 @@ class CinemaController extends \BaseController {
 		//
 	}
 
+    /**
+     * Display a listing of cinemas order by the distance to specified location.
+     *
+     * @param  float  $latitude
+     * @param  float  $longitude
+     * @param  float  $radius(optional)
+     * @return Response
+     */
+    public function locateCinemas($latitude, $longitude, $radius = null)
+    {
+        $radius = $radius ? $radius : Config::get('app.radius', 10);
+        $limit = Config::get('app.page_size', 10);
+
+        $cinemas = DB::table('cinemas')->select(DB::raw("*, (
+            6371 * acos(
+                cos( radians(?) )
+                * cos( radians( latitude ) )
+                * cos( radians( longitude ) - radians(?) )
+                + sin( radians(?) )
+                * sin( radians( latitude ) )
+            ) ) AS distance"))
+            ->setBindings(array($latitude, $longitude, $latitude))
+            ->having('distance', '<=', $radius)
+            ->orderBy('distance')
+            ->take($limit)->get();
+
+        return Response::json($cinemas);
+    }
 
 }

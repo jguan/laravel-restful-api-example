@@ -189,6 +189,10 @@ return array(
 
 	),
 
+    // pagination page size
     'page_size' => 5,
+
+    // location radius in KM
+    'radius' => 25,
 
 );

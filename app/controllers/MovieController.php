@@ -43,7 +43,7 @@ class MovieController extends \BaseController {
 	 */
 	public function show($name)
 	{
-        return Response::json(Movie::where('title', '=', $name)->first()->toArray());
+        return Response::json(Movie::where('title', '=', $name)->firstOrFail()->toArray());
 	}
 
 
