@@ -20,6 +20,7 @@ class CreateSessionTimesTable extends Migration {
             $table->integer('cinema_id')->unsigned();
             $table->foreign('cinema_id')->references('id')->on('cinemas')->onDelete('cascade')->onUpdate('cascade');
             $table->dateTime('play_at');
+            $table->unique(array('movie_id', 'cinema_id', 'play_at'));
 		});
 	}
 

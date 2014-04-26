@@ -51,8 +51,47 @@ class CinemaController extends \BaseController {
 	 */
 	public function show($name)
 	{
-        return Response::json(Cinema::where('name', '=', $name)->first()->toArray());
+        return Response::json(Cinema::where('name', '=', $name)->firstOrFail()->toArray());
 	}
+
+    /**
+     * Retrieve the movies at the specified cinema on the specified date.
+     *
+     * @param  string  $name
+     * @param  string  $date
+     * @return Response
+     */
+    public function showMovies($name, $date)
+    {
+        $dt = new Carbon($date);
+        $from = $dt->startOfDay()->toDateTimeString();
+        $to = $dt->endOfDay()->toDateTimeString();
+
+        $cinema = Cinema::with(array('movies' => function($query) use ($from, $to) {
+            $query->where('play_at', '>=', $from)->where('play_at', '<=', $to)->orderBy('title')->orderBy('play_at');
+        }))->where('name', '=', $name)->firstOrFail();
+
+        $result = $cinema->toArray();
+        $result['movies'] = [];
+
+        $movieInfo = [];
+        foreach($cinema->movies as $movie) {
+            if (!empty($movieInfo) && $movieInfo['id'] == $movie->pivot->movie_id) {
+                $movieInfo['session_times'][] = $movie->pivot->play_at;
+            } else {
+                if (!empty($movieInfo)) {
+                    $result['movies'][] = (object)$movieInfo;
+                }
+                $movieInfo = [];
+                $movieInfo['id'] = $movie->id;
+                $movieInfo['title'] = $movie->title;
+                $movieInfo['session_times'][] = $movie->pivot->play_at;
+            }
+        }
+        $result['movies'][] = (object)$movieInfo;
+
+        return Response::json($result);
+    }
 
 
 	/**

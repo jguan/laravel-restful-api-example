@@ -20,3 +20,4 @@ Route::get('/', function()
 
 Route::resource('cinemas', 'CinemaController');
 Route::resource('movies', 'MovieController');
+Route::get('cinemas/{name}/{date}', 'CinemaController@showMovies');

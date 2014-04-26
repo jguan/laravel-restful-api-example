@@ -85,3 +85,10 @@ App::missing(function()
     return Response::make("This is not a valid URL for this REST service.", 404);
 });
 
+use Illuminate\Database\Eloquent\ModelNotFoundException;
+
+App::error(function(ModelNotFoundException $e)
+{
+    return Response::make('Not Found', 404);
+});
+
