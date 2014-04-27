@@ -81,15 +81,18 @@ App::down(function()
 
 require app_path().'/filters.php';
 
+# Register an error handler that handles "404 Not Found" error with custom message
 App::missing(function()
 {
     return Response::make("This is not a valid URL for this REST service.", 404);
 });
 
+# Register the error handler, listening for the ModelNotFoundException, to catch the exception when a model is not found
+# Triggered by findOrFail() or firstOrFail() in Eloquent
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 App::error(function(ModelNotFoundException $e)
 {
-    return Response::make('Not Found', 404);
+    return Response::make('Data Not Found', 404);
 });
 

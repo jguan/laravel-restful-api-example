@@ -11,9 +11,9 @@
 |
 */
 
-Route::get('/', function()
+# throw a 404 error for any url that isn't specified
+Route::any( '(.*)', function()
 {
-	//return View::make('hello');
     App::abort(404);
 
 });
