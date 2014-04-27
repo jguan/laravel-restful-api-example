@@ -10,7 +10,7 @@ A simple RESTful API to access cinemas and movies information built with Laravel
 /cinemas
 ```
 Sample Response in JSON:
-```
+```json
 [
   {
     id: 1,
@@ -46,7 +46,7 @@ cinemas/location/{latitude}/{longitude}/{radius?}
 > **Note: {radius} is optional parameter in kilometers. API would provide default value if it's omitted. This can be used to find the nearest cinemas to your home.**
 
 Sample Response in JSON:
-```
+```json
 [
   {
     id: 6,
@@ -73,7 +73,7 @@ Sample Response in JSON:
 /cinemas/{name}
 ```
 Sample Response in JSON:
-```
+```json
 {
   id: 1,
   name: "c1",
@@ -89,7 +89,7 @@ Sample Response in JSON:
 /movies/{name}
 ```
 Sample Response in JSON:
-```
+```json
 [
   {
     id: 1,
@@ -114,7 +114,7 @@ Sample Response in JSON:
 > **Note: {date} could be any date string that is supported by PHP DateTime class. For example, `2014-04-25`, `25 April 2014`, `Today` and `next Sunday`. However, {date} containing `/`(slash) as delimiter would cause a invalid request.**
 
 Sample Response in JSON:
-```
+```json
 {
   id: 1,
   name: "cinema1",
