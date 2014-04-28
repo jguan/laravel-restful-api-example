@@ -1,6 +1,15 @@
 <?php
 
+use Repositories\MovieRepositoryInterface as MovieInterface;
+
 class MovieController extends \BaseController {
+
+    protected $model;
+
+    public function __construct(MovieInterface $model)
+    {
+        $this->model = $model;
+    }
 
 	/**
 	 * Display a listing of the resource.
@@ -9,7 +18,7 @@ class MovieController extends \BaseController {
 	 */
 	public function index()
 	{
-        return Response::json(Movie::all()->toArray());
+        return Response::json($this->model->all()->toArray());
 	}
 
 
@@ -43,7 +52,7 @@ class MovieController extends \BaseController {
 	 */
 	public function show($name)
 	{
-        return Response::json(Movie::where('title', '=', $name)->firstOrFail()->toArray());
+        return Response::json($this->model->where($name)->firstOrFail()->toArray());
 	}
 
 

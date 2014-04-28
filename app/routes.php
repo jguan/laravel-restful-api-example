@@ -11,6 +11,11 @@
 |
 */
 
+App::bind(
+    'Repositories\MovieRepositoryInterface',
+    'Repositories\EloquentMovieRepository'
+);
+
 # throw a 404 error for any url that isn't specified
 Route::any( '(.*)', function()
 {
