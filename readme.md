@@ -111,7 +111,7 @@ Sample Response in JSON:
 ```
 /cinemas/{name}/{date}
 ```
-> **Note: {date} could be any date string that is supported by PHP DateTime class. For example, `2014-04-25`, `25 April 2014`, `Today` and `next Sunday`. However, {date} containing `/`(slash) as delimiter would cause a invalid request.**
+> **Note: {date} could be any date string that is supported by PHP DateTime class. For example, `2014-04-25`, `25 April 2014`, `Today` and `next Sunday`. However, {date} containing `/`(slash) as delimiter would cause an invalid request.**
 
 Sample Response in JSON:
 ```json
